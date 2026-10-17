@@ -5,6 +5,9 @@ bounded access to VMware Workstation guests. It keeps VMware guest credentials o
 of process arguments while routing credentialed guest operations through the
 installed native VIX API.
 
+**Version 1.0.0 — experimental release.** The version marks the first public
+packaging milestone, not full vendor parity or production/security approval.
+
 > **Status:** experimental, Windows-only lab software. The catalog covers all 47
 > command names in the pinned `vmrun` version, but support is intentionally bounded:
 > partial backends are not full vendor parity, and local tests are not live VM tests.

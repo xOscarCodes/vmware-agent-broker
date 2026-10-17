@@ -2,7 +2,7 @@
 
 ## Reproducible checks in this repository
 
-At the public-export snapshot, the Windows x86 build/test command completed with
+For the 1.0.0 source snapshot, the Windows x86 build/test command completed with
 warnings-as-errors and **297 tests passed**. The test runner reported that it made
 no VMware calls, prompts or credential-store reads. Formatting verification and
 both catalog checks passed in the local export workspace.

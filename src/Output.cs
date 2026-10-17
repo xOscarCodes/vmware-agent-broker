@@ -161,8 +161,8 @@ namespace GuestBroker
 
     internal static class Output
     {
-        internal const string Version = "VMware Guest Broker 0.15.8-interactive-local-name (experimental, Windows .NET Framework x86)";
-        internal const string Help = @"VMware Guest Broker 0.15.8-interactive-local-name - policy-scoped local VMware Tools operations
+        internal const string Version = "VMware Agent Broker 1.0.0 (experimental, Windows .NET Framework x86)";
+        internal const string Help = @"VMware Agent Broker 1.0.0 - policy-scoped local VMware Workstation operations
 Per-operation approval prompts are DEFERRED. Configured requests execute unattended.
 Target/capability/root/ownership/image/secret protections remain. This is not production security assurance.
 Registration/policy/root setup and private credential entry/storage remain user-operated.
