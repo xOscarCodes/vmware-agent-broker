@@ -1,0 +1,6 @@
+bin/
+obj/
+coverage/__pycache__/
+.vs/
+*.user
+*.suo

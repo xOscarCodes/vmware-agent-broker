@@ -1,0 +1,2 @@
+# Archify emits a validated self-contained HTML artifact with intentional layout whitespace.
+docs/architecture.html whitespace=-blank-at-eol,-blank-at-eof

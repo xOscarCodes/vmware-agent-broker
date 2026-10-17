@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "VMware Guest Broker",
+    "locale": "en",
+    "output": "docs/architecture.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "operator",
+      "type": "external",
+      "label": "User / automation",
+      "sublabel": "Invokes a named command",
+      "pos": [
+        40,
+        100
+      ],
+      "size": [
+        160,
+        68
+      ]
+    },
+    {
+      "id": "cli",
+      "type": "frontend",
+      "label": "Broker CLI",
+      "sublabel": "One explicitly registered target",
+      "pos": [
+        270,
+        100
+      ],
+      "size": [
+        190,
+        68
+      ]
+    },
+    {
+      "id": "registry",
+      "type": "database",
+      "label": "Private setup",
+      "sublabel": "User-only VM registrations + policy",
+      "pos": [
+        260,
+        290
+      ],
+      "size": [
+        210,
+        78
+      ]
+    },
+    {
+      "id": "native",
+      "type": "security",
+      "label": "Native VIX worker",
+      "sublabel": "Private credential entry / exact saved key",
+      "pos": [
+        550,
+        70
+      ],
+      "size": [
+        230,
+        82
+      ],
+      "tag": "SECRETS STAY OUT OF CLI"
+    },
+    {
+      "id": "official",
+      "type": "backend",
+      "label": "Pinned VMware CLI",
+      "sublabel": "Separate credential-free child",
+      "pos": [
+        550,
+        250
+      ],
+      "size": [
+        230,
+        76
+      ]
+    },
+    {
+      "id": "guest",
+      "type": "cloud",
+      "label": "Selected VM / guest",
+      "sublabel": "Native guest operations or enrolled helper",
+      "pos": [
+        870,
+        100
+      ],
+      "size": [
+        230,
+        82
+      ]
+    },
+    {
+      "id": "host",
+      "type": "security",
+      "label": "Machine-scoped host work",
+      "sublabel": "Separate from guest credentials",
+      "pos": [
+        870,
+        300
+      ],
+      "size": [
+        230,
+        78
+      ]
+    },
+    {
+      "id": "evidence",
+      "type": "external",
+      "label": "Result + test evidence",
+      "sublabel": "Bounded outputs; scoped live observations",
+      "pos": [
+        1150,
+        165
+      ],
+      "size": [
+        230,
+        78
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "request",
+      "from": "operator",
+      "to": "cli",
+      "label": "command"
+    },
+    {
+      "id": "resolve",
+      "from": "cli",
+      "to": "registry",
+      "label": "exact name + policy",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "native-call",
+      "from": "cli",
+      "to": "native",
+      "label": "authenticated path",
+      "variant": "security"
+    },
+    {
+      "id": "cli-call",
+      "from": "cli",
+      "to": "official",
+      "label": "credential-free path",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "vix-guest",
+      "from": "native",
+      "to": "guest",
+      "label": "VIX / Tools helper",
+      "variant": "emphasis"
+    },
+    {
+      "id": "vmware-guest",
+      "from": "official",
+      "to": "guest",
+      "label": "pinned executable",
+      "fromSide": "right",
+      "toSide": "bottom"
+    },
+    {
+      "id": "vmware-host",
+      "from": "official",
+      "to": "host",
+      "label": "separate host operations",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "host-result",
+      "from": "host",
+      "to": "evidence",
+      "label": "bounded observation",
+      "fromSide": "right",
+      "toSide": "bottom"
+    },
+    {
+      "id": "guest-result",
+      "from": "guest",
+      "to": "evidence",
+      "label": "operation result"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "rose",
+      "title": "Trust boundaries",
+      "items": [
+        "Registration and policy are configured privately by the user.",
+        "No per-operation approval UI: configured scoped commands run unattended.",
+        "Guest secrets are entered through private UI or the exact saved entry; never CLI arguments, environment, files or broker IPC.",
+        "Machine-scoped host operations are distinct from per-VM guest operations."
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Evidence today",
+      "items": [
+        "Many bounded command variants have owner live observations; this is NOT 47 live passes or full variant parity. Some remain blocked or partial.",
+        "Current public fixture input, host-only IP observation and checksum-verified Photon download have been live tested.",
+        "Forwarding-write add/remove have not passed. Default global list remains partial.",
+        "A configured protected target is excluded from destructive tests. Same-user code is not sandboxed; VMware's internal credential transport is unaudited."
+      ]
+    }
+  ]
+}
